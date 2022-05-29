@@ -1,0 +1,53 @@
+%%
+% Lam, Richard - 012358411 - HW2, Problem 6B - 04/10/2022
+%
+% Description: This script simulates the response of the unit-step response
+% of the control system
+% G = Transfer function
+clear; clc; close all; % Clears the workspace and command window.
+%%
+%%%%%%%%%%%%
+%Problem 3B%
+%%%%%%%%%%%%
+s = tf('s'); % Define open-loop trabsfer function
+G = 1/(s^3+7*s^2+12*s);
+
+figure (1);
+rlocus (G);
+
+%%
+%%%%%%%%%%%%
+%Problem 3C%
+%%%%%%%%%%%%
+t0 = 0;
+ti = 0.01;
+tf = 50;
+dt = 1E-2;
+% Choose gain K based on the root locus plot to stabilize the system
+k = 9.1;
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Call Simulink Block Diagram%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+open_system('control_system.slx');
+sim('control_system.slx');
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Plot Output and Reference Data data%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+hold all; % This is so each plot is actually gets plotted instead of overriding each other. 
+
+figure (2);
+plot(ans.Reference_Signal(:,1),ans.Reference_Signal(:,2));
+hold on;
+plot(ans.Output_Response_Signal(:,1),ans.Output_Response_Signal(:,2));
+title('Unit-Step Response of the Control System');
+xlabel('Time (s)');
+ylabel('Amplitude');
+legend('Reference Signal','Output Signal')
+
+%%%%%%%%%%%%%%%%%%%
+%Step Info command%
+%%%%%%%%%%%%%%%%%%%
+s1= stepinfo(ans.out.Data,ans.out.Time);
+disp(s1);
