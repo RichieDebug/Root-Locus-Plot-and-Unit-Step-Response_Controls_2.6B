@@ -9,7 +9,7 @@ clear; clc; close all; % Clears the workspace and command window.
 %%%%%%%%%%%%
 %Problem 3B%
 %%%%%%%%%%%%
-s = tf('s'); % Define open-loop trabsfer function
+s = tf('s'); % Define open-loop transfer function
 G = 1/(s^3+7*s^2+12*s);
 
 figure (1);
